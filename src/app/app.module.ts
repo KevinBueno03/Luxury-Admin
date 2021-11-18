@@ -5,6 +5,14 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule , ArrayOfComponents} from './app-routing.module';
 import { MaterialModule } from './material.module';
 import { NavbarComponent } from './pages/navbar/navbar.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+
+
+import { ServiceAdmin } from './services/ServiceAdmin.service';
+import { InicioComponent } from './auth/inicio/inicio.component';
+import { HttpClientModule } from '@angular/common/http';
 
 //componentes
 
@@ -13,13 +21,21 @@ import { NavbarComponent } from './pages/navbar/navbar.component';
   declarations: [
     AppComponent,
     ArrayOfComponents,
-    NavbarComponent
+    NavbarComponent,
+    InicioComponent
   ],
   imports: [
     BrowserModule,
     RouterModule,
     AppRoutingModule,
-    MaterialModule  ],
+    MaterialModule,
+    FormsModule,
+    NgbModule,
+    ReactiveFormsModule,
+  HttpClientModule],
+  providers:[
+    ServiceAdmin
+  ],  
     
   bootstrap: [AppComponent]
 })

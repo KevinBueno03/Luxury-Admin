@@ -2,3 +2,24 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.c-morado{
+    color: #6B45BC;
+}
+
+.c-amarillo{
+    color: #FFB800;
+}
+
+.c-gris{
+    color: #838383;
+}
+
+
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0;
+}

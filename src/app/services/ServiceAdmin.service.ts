@@ -22,7 +22,7 @@ import { LoginResponse } from "../interfaces/admin.interfaces";
     login(email:string,password:string){
         const url= `${this.APIURL}/login?type=admin`;
         const body={email,password};
-        return this.http.post<LoginResponse>(url,body).pipe(
+        return this.http.post<any>(url,body).pipe(
             tap(res => {
                 if(res.token){
                     localStorage.setItem('token',res.token!);

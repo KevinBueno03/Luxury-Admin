@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { InicioComponent } from './auth/inicio/inicio.component';
-import { OrdersComponent } from './pages/orders/orders.component';
+import { AuthComponent } from './components/auth/auth.component';
+import { CompaniesComponent } from './components/companies/companies.component';
+import { OrdersComponent } from './components/orders/orders.component';
+
+
 
 
 
 const routes: Routes = [
 
   {path:'',redirectTo:'admin',pathMatch:'full'},
-  {path: 'admin',component:InicioComponent},
+  {path: 'admin',component:AuthComponent},
   {path:'admin/orders',component:OrdersComponent},
-  
+  {path:'admin/companies',component:CompaniesComponent}
   
 
 ];
@@ -21,4 +24,4 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 
-export const ArrayOfComponents =[InicioComponent,OrdersComponent]
+export const ArrayOfComponents =[AuthComponent,OrdersComponent]

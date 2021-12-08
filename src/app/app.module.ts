@@ -4,15 +4,19 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule , ArrayOfComponents} from './app-routing.module';
 import { MaterialModule } from './material.module';
-import { NavbarComponent } from './pages/navbar/navbar.component';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
-
 import { ServiceAdmin } from './services/ServiceAdmin.service';
-import { InicioComponent } from './auth/inicio/inicio.component';
+
 import { HttpClientModule } from '@angular/common/http';
+//components
+import { AuthComponent } from './components/auth/auth.component';
+import { OrdersComponent } from './components/orders/orders.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { CompaniesComponent } from './components/companies/companies.component';
 
 //componentes
 
@@ -20,9 +24,10 @@ import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
-    ArrayOfComponents,
     NavbarComponent,
-    InicioComponent
+    AuthComponent,
+    OrdersComponent,
+    CompaniesComponent
   ],
   imports: [
     BrowserModule,
@@ -32,8 +37,8 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     NgbModule,
     ReactiveFormsModule,
-  HttpClientModule],
-  providers:[
+    HttpClientModule],
+    providers:[
     ServiceAdmin
   ],  
     

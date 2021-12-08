@@ -3,13 +3,14 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { ServiceAdmin } from 'src/app/services/ServiceAdmin.service';
 
+
 @Component({
-  selector: 'app-inicio',
-  templateUrl: './inicio.component.html',
-  styleUrls: ['./inicio.component.css']
+  selector: 'app-auth',
+  templateUrl: './auth.component.html',
+  styleUrls: ['./auth.component.css']
 })
 
-export class InicioComponent implements OnInit{
+export class AuthComponent implements OnInit{
   submited : boolean = false;
 
   onSubmit(){
@@ -38,11 +39,14 @@ export class InicioComponent implements OnInit{
 
   login(){
     const {email,password} = this.loginForm.value;
-    this.serviceAdmin.login(email,password).subscribe(res =>{
+    this.serviceAdmin.login(email,password).subscribe(
+      res =>{
+        console.log(res);
       if(res){
         console.log("entro")
         this.router.navigateByUrl('/admin/orders');
       }else {
+        console.log(res);
         alert("datos invalidos");
       }  
     })

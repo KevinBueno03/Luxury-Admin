@@ -17,6 +17,8 @@ import { AuthComponent } from './components/auth/auth.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CompaniesComponent } from './components/companies/companies.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { Ng2OrderModule } from 'ng2-order-pipe';
 
 //componentes
 
@@ -37,7 +39,11 @@ import { CompaniesComponent } from './components/companies/companies.component';
     FormsModule,
     NgbModule,
     ReactiveFormsModule,
-    HttpClientModule],
+    HttpClientModule,
+    Ng2SearchPipeModule,
+    Ng2OrderModule
+  ],
+    
     providers:[
     ServiceAdmin
   ],  

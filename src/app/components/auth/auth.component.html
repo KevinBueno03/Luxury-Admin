@@ -22,7 +22,7 @@
             formControlName="email"
             [ngClass]="{'is-invalid':loginUsuario['email'].errors}">  
           <div *ngIf="loginUsuario['email'].errors">
-            <div *ngIf="loginUsuario['email'].errors['required']">
+            <div *ngIf="loginUsuario['email'].errors['required'] && loginUsuario['email']?.touched">
               Email no puede estar vacio
             </div>
             <div *ngIf="loginUsuario['email'].errors['email']">
@@ -38,7 +38,7 @@
             [ngClass]="{'is-invalid':loginUsuario['password'].errors}">
             
           <div *ngIf="loginUsuario['password'].errors">
-            <div *ngIf="loginUsuario['password'].errors['required']">
+            <div *ngIf="loginUsuario['password'].errors['required'] && loginUsuario['email']?.touched">
               Password no puede estar vacio
             </div>
             <div *ngIf="loginUsuario['password'].errors['minlength']">

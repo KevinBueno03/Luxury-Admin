@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders} from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { catchError,map,tap } from "rxjs/operators";
-import { of } from "rxjs";
+import { Observable, of } from "rxjs";
 
 
 import { LoginResponse } from "../interfaces/admin.interfaces";
@@ -45,5 +45,15 @@ import { LoginResponse } from "../interfaces/admin.interfaces";
     logout(){
         localStorage.clear();
     }
+
+    obtenerCategorias():Observable<any>{
+        return this.http.get('http://127.0.0.1:8888/api/categories',{})
+    }
+
+    obtenerLocales(idCategoria:any):Observable<any>{
+        return this.http.get(`http://127.0.0.1:8888/api/category/${idCategoria}/companies`,{})
+    }
+
+   
 
 } 

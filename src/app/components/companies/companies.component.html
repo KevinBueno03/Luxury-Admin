@@ -1,32 +1,97 @@
 <app-navbar></app-navbar>
 
 
-<div  class="container align-middle position-relative"  style="margin-top:5em;">
+<div class="container align-middle position-relative" style="margin-top:5em;">
+  <div class="shadow-lg p-3 mb-5 ml-5 bg-body rounded"style="max-width:auto;
+    max-height:max-content;">
 
-    <div class="shadow-lg p-3 mb-5 ml-5 bg-body rounded   " style="max-width:auto; max-height:max-content;">
-    
-        <div class="container">
-            <div class="row">
-              <div class="col-sm">
-                <h1>Locales</h1>
-              </div>
-              <div class="col-sm">
-                <div class="form-group" style="width: 70% !important;">
-                    <label for="exampleFormControlSelect2">Seleccion de Categoria</label>
-                    <select  class="form-control" id="exampleFormControlSelect2">
-                      <option>Joyeria</option>
-                      <option>Relojeria</option>
-
-                    </select>
-                  </div>
-              </div>
-              <div class="col-sm">
-                <button type="button" class="btn btn-outline-primary">Agregar Categoria</button>
-              </div>
-            </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-5" style="margin-top: 1rem;">
+          <h1 style="font-weight: bolder; font-size:3rem;" class="c-morado">Locales</h1>
         </div>
-        
+        <div class="col-3">
+          <div class="form-group" style="width: 70% !important;">
+            <label for="exampleFormControlSelect2">Seleccion de Categoria</label>
+            <select class="form-control"  [(ngModel)]="idCategorySelected"
+            (change)="changeLocals()">
+              <option *ngFor="let category of categories" [ngValue]="category._id" 
+              > {{category.name}}</option>
 
+            </select>
+          </div>
+        </div>
+        <div class="col-3" style="margin-top: 1rem;">
+          <button type="button" class="btn btn-outline-primary">Agregar
+            Categoria</button>
+        </div>
+      </div>
+      <div class="row">
+        <button type="button" class="btn btn-outline-primary">Agregar Local a
+          categoria</button>
+      </div>
+
+      <!--Row table-->
+      <div class="container-fluid">
+
+
+        <div class="row" style="margin-top: 1rem;">
+
+          <div class="col-12" >
+            <form>
+              <div class="form-group form-inline">
+                Busqueda: <input class="form-control ml-2" type="text"
+                  [formControl]="filter" />
+              </div>
+            </form>
+
+            <table class="table table-striped col-12">
+              <thead>
+                <tr >
+                  <th  scope="col">#</th>
+                  <th  scope="col">Nombre Empresa </th>
+                  <th  scope="col">articulos publicados</th>
+                  <th scope="col">Enlaces</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let company of companiesCategory">
+                  <th scope="row">{{ company._id}}</th>
+                  <td>
+                    <ngb-highlight [result]="company.name"
+                      [term]="filter.value"></ngb-highlight>
+                  </td>
+                  <td><ngb-highlight [result]="company.products.length"
+                      [term]="filter.value"></ngb-highlight></td>
+                  <td>
+                    <button type="button" class="btn btn-outline-primary" (click)="openCompany(modalCompany,company._id)">Ver Local</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
 
+
+  </div>
+
 </div>
+
+<!--Modal angular playlist-->
+<ng-template #modalCompany let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title"> Nueva Playlis</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+  
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-success" >Guardar</button>
+    <button type="button" class="btn btn-outline-success" (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>

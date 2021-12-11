@@ -83,6 +83,19 @@ import { LoginResponse } from "../interfaces/admin.interfaces";
             }
         )
     }
+    
+     guardarProducto(data:any,id:any):Observable<any>{
+        
+        return this.http.post(`${this.APIURL}/product/company/${id}`,
+            {
+                'name':data.name,
+                'description':data.description,
+                'price':data.price,
+                'img':data.img
+            }
+        )
+    }
+    
 
 
     

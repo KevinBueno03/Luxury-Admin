@@ -86,24 +86,56 @@
 <ng-template #modalCompany let-modal>
   <div class="modal-header">
 
-    <div style="width: 100px; height: 100px; margin-top: 25px;">
-      <img src="{{company.logo}}" class="img-fluid" alt="...">
-
+    <div class="container-fluid">
+      <div class="row">
+        <div  class="col" style="width: 100px; height: 100px; margin-top: 25px;">
+          <img src="{{company.logo}}" class="img-fluid" alt="...">
+        </div>
+        <div class="col"> <h1 class="modal-title text-center" style="margin-left: 250px; margin-top: 50px;" id="modal-basic-title">{{company.name}} Company</h1>
+        </div>
+        <div class="col" style="margin-left: 250px;margin-top: 50px "> 
+          <ngb-rating [(rate)]="currentRate"></ngb-rating>
+            <hr>
+          <pre>Rate: <b>{{currentRate}}</b></pre>
+        </div>
+      </div>
     </div>
-    <h1 class="modal-title text-center" style="margin-left: 250px; margin-top: 50px;" id="modal-basic-title">{{company.name}} Company</h1>
-    <div> 
-      <ngb-rating [(rate)]="currentRate"></ngb-rating>
-        <hr>
-      <pre>Rate: <b>{{currentRate}}</b></pre>
-    </div>
+    
+    
+    
     <button type="button" class="close" aria-label="Close"
       (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
-    </button>
+  </button>
 
   </div>
+  <!--body-->
   <div class="modal-body">
-    
+
+    <div  class="row" style="margin-left: 25px;">
+      <button  type="button" class="btn btn-outline-primary" (click)="openAddProduct(modalAddProduct)"
+        >Agregar Producto</button>
+    </div>
+
+    <table class="table table-striped col-12 mt-2">
+      <thead>
+        <tr>
+          <th scope="col">#id</th>
+          <th scope="col">Nombre articulo </th>
+          <th scope="col">precio</th>
+          <th scope="col">estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of productsCompany">
+          <td scope="row">{{ product._id}}</td>
+          <td>{{product.name}}</td>
+          <td>{{product.price}}</td>
+          <td>{{product.active}}</td>
+        </tr>
+      </tbody>
+    </table>
+
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-success">Guardar</button>
@@ -180,6 +212,74 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-primary" [disabled]=formAddCompany.invalid (click)="saveCompany()">Guardar Categoria</button>
+    <button type="button" class="btn btn-primary" (click)="modal.close('Cerrar')">Cerrar</button>
+  </div>
+</ng-template>
+<!--Modal agregar un producto-->
+<ng-template #modalAddProduct let-modal>
+  <div class="modal-header" style="background-color: #563D7C;">
+    <h4  style="color: aliceblue; font-size: large;" class="modal-title" id="modal-basic-title"> Agregar Producto</h4>
+    <button  type="button" class="close" aria-label="Close"
+      (click)="modal.dismiss('Cross click')">
+      <span style="color: aliceblue;" aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formAddProduct">
+           <h3> Nombre producto</h3>
+        <input [ngClass]="{'input-error':formAddProductget['name'].invalid && (formAddProductget['name'].dirty || formAddProductget['name']?.touched)}" formControlName="name" type="text" class="form-control "
+          id="txt-nombre" placeholder="Nombre Producto" required>
+          
+      <!--Validaciones campo nombre-->
+      <div *ngIf="formAddProductget['name'].errors &&  formAddProductget['name']?.touched" >
+        <div *ngIf="formAddProductget['name'].errors['required']"  >
+          El campo no puede estar vacio 
+        </div>
+       
+      </div>
+      <!--fina de las validaciones-->
+        <div> <h3> Descripcion </h3></div>
+        <input [ngClass]="{'input-error':formAddProductget['description'].invalid && (formAddProductget['description'].dirty || formAddProductget['description']?.touched)}" formControlName="description" type="text" class="form-control "
+          id="txt-descripcion" placeholder="descripcion de Producto">
+            <!--Validaciones campo nombre-->
+              <div *ngIf="formAddProductget['description'].errors &&  formAddProductget['description']?.touched" >
+                <div *ngIf="formAddProductget['description'].errors['required']"  >
+                  El campo no puede estar vacio 
+                </div>
+              
+              </div>
+       <!--fina de las validaciones-->
+
+      <!--fina de las validaciones-->
+        <div> <h3> Precio </h3></div>
+        <input [ngClass]="{'input-error':formAddProductget['price'].invalid && (formAddProductget['price'].dirty || formAddProductget['price']?.touched)}" formControlName="price" type="Number" class="form-control "
+          id="txt-descripcion" placeholder="precio" >
+            <!--Validaciones campo nombre-->
+              <div *ngIf="formAddProductget['price'].errors &&  formAddProductget['price']?.touched" >
+                <div *ngIf="formAddProductget['price'].errors['required']"  >
+                  El campo no puede estar vacio 
+                </div>
+                <div *ngIf="formAddProductget['price'].errors['minLength']"  >
+                  Prcio mayor o igual a 1
+                </div>
+              
+              </div>
+       <!--fina de las validaciones-->
+      
+  <!--fina de las validaciones-->
+      <div class="m-t 2"><h2>Seleccione una imagen del producto</h2></div>
+      <input class="input-file" (change)="capturarFile($event,'addProduct','img')" type="file"
+        accept="image/*" placeholder="Seleccione Logo">
+      <div class="preview-img" *ngIf="previsualizacionImg">
+        
+        <img [src]="previsualizacionImg | img" alt="" style="width: 200px;">
+      </div>
+      <div *ngIf="previsualizacionLogo && previsualizacionImg"><button class="clear-image" type="button" (click)="clearImage()">Eliminar Todas las imagenes</button></div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" [disabled]=formAddProduct.invalid (click)="saveProduct()">Guardar Categoria</button>
     <button type="button" class="btn btn-primary" (click)="modal.close('Cerrar')">Cerrar</button>
   </div>
 </ng-template>

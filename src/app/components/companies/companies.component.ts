@@ -51,6 +51,14 @@ export class CompaniesComponent implements OnInit {
     logo : new FormControl('',[Validators.required]),
   });
 
+  formAddProduct = this._formBuilder.group({
+    name : new FormControl('',[Validators.required]),
+    description : new FormControl('',[Validators.required]),
+    price : new FormControl('',[Validators.required,Validators.minLength(1)]),
+    img : new FormControl('',[Validators.required]),
+    
+  });
+
     formAddCategory = this._formBuilder.group({
       categoryName : new FormControl('',[Validators.required]),
     })
@@ -84,6 +92,9 @@ export class CompaniesComponent implements OnInit {
   get formAddCategoryget(){
     return this.formAddCategory.controls;
   }
+  get formAddProductget(){
+    return this.formAddProduct.controls;
+  }
 
   changeLocals(){
     console.log("a ver",this.idCategorySelected);
@@ -100,7 +111,7 @@ export class CompaniesComponent implements OnInit {
     )
   }
 
-  async openCompany(modal:any,idCompany:any){
+ openCompany(modal:any,idCompany:any){
 
 
 
@@ -163,6 +174,19 @@ export class CompaniesComponent implements OnInit {
       }
     );
 }
+openAddProduct(modal:any){
+    
+
+  this.modalService.open(
+    modal,
+    {
+      size:'l',
+      centered:false
+    }
+  );
+}
+
+
 
   saveCompany(){
     let newCompany ={
@@ -198,6 +222,40 @@ export class CompaniesComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
+   saveProduct(){
+    var newProduct ={
+      'name':this.formAddProduct.get('name')!.value,
+      'description':this.formAddProduct.get('description')!.value,
+      'price':this.formAddProduct.get('price')!.value,
+      'img':this.formAddProduct.get('img')!.value,
+    }
+    
+    console.log("newProduct",newProduct);
+    this.adminService.guardarProducto(newProduct,this.idCompany).subscribe(
+      res =>{
+      
+        console.log("Guardada")
+         this.adminService.obtenerProductos(this.idCompany).subscribe(
+          res =>{
+            this.productsCompany=res.products;
+            console.log("Productos: ",this.productsCompany)
+            
+          }
+          ,
+          error =>{
+            console.log(error);
+          }
+        )
+        
+        
+      }
+      ,
+      error =>{
+        console.log(error);
+      }
+    )
+    
+  }
    saveCategory(){
     var newCategory ={
       'name':this.formAddCategory.get('categoryName')!.value,
@@ -268,6 +326,18 @@ search(){
         console.log(this.archivos);
 
       }
+
+    }else if(toWhatForm=='addProduct'){
+      this.archivos = [];
+      this.previsualizacionImg = ''
+      const archivoCapturado = event.target.files[0]
+        await this.extraerBase64(archivoCapturado).then((imagen: any) => {
+          this.previsualizacionImg = imagen.base;
+          this.image = imagen.base;
+          this.formAddProduct.controls['img'].setValue(this.image);
+        })
+        this.archivos.push(this.image);
+        console.log("Product img",this.archivos);
 
     }
     console.log(this.formAddCompany);

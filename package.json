@@ -25,10 +25,12 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
+    "@sweetalert2/ngx-sweetalert2": "^10.0.0",
     "bootstrap": "^4.5.0",
     "ng2-order-pipe": "^0.1.5",
     "ng2-search-filter": "^0.5.1",
     "rxjs": "~7.4.0",
+    "sweetalert2": "^11.3.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },

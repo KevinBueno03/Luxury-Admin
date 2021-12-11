@@ -2,7 +2,7 @@
 
 
 <div class="container align-middle position-relative" style="margin-top:5em;">
-  <div class="shadow-lg p-3 mb-5 ml-5 bg-body rounded"style="max-width:auto;
+  <div class="shadow-lg p-3 mb-5 ml-5 bg-body rounded" style="max-width:auto;
     max-height:max-content;">
 
     <div class="container">
@@ -13,22 +13,23 @@
         <div class="col-3">
           <div class="form-group" style="width: 70% !important;">
             <label for="exampleFormControlSelect2">Seleccion de Categoria</label>
-            <select class="form-control"  [(ngModel)]="idCategorySelected"
-            (change)="changeLocals()">
-              <option *ngFor="let category of categories" [ngValue]="category._id" 
-              > {{category.name}}</option>
+            <select class="form-control" [(ngModel)]="idCategorySelected"
+              (change)="changeLocals()">
+              <option *ngFor="let category of categories"
+                [ngValue]="category._id"> {{category.name}}</option>
 
             </select>
           </div>
         </div>
         <div class="col-3" style="margin-top: 1rem;">
-          <button type="button" class="btn btn-outline-primary">Agregar
+          <button (click)="openAddCategory(modalAddCategory)" type="button" class="btn btn-outline-primary">Agregar
             Categoria</button>
         </div>
-      </div>
-      <div class="row">
-        <button type="button" class="btn btn-outline-primary">Agregar Local a
-          categoria</button>
+        <div  class="row" style="margin-left: 25px;">
+          <button [hidden]="!idCategorySelected" type="button" class="btn btn-outline-primary"
+            (click)="openAddCompany(modalAddCompany)">Agregar Local a
+            categoria</button>
+        </div>
       </div>
 
       <!--Row table-->
@@ -37,34 +38,36 @@
 
         <div class="row" style="margin-top: 1rem;">
 
-          <div class="col-12" >
-            <form>
+          <div class="col-12">
+            <!--
+                <form>
               <div class="form-group form-inline">
                 Busqueda: <input class="form-control ml-2" type="text"
                   [formControl]="filter" />
               </div>
-            </form>
+              </form>
+              -->
+            <input class="form-control" type="text" name="name"
+              [(ngModel)]="name" (ngModelChange)="search()" placeholder="Buscar por nombre de local" style="width: 450px;">
 
-            <table class="table table-striped col-12">
+            <table class="table table-striped col-12 mt-2">
               <thead>
-                <tr >
-                  <th  scope="col">#</th>
-                  <th  scope="col">Nombre Empresa </th>
-                  <th  scope="col">articulos publicados</th>
+                <tr>
+                  <th scope="col">#id</th>
+                  <th scope="col">Nombre Empresa </th>
+                  <th scope="col">articulos publicados</th>
                   <th scope="col">Enlaces</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let company of companiesCategory">
-                  <th scope="row">{{ company._id}}</th>
+                  <td scope="row">{{ company._id}}</td>
+                  <td>{{company.name}}</td>
+                  <td>{{company.products.length}}</td>
                   <td>
-                    <ngb-highlight [result]="company.name"
-                      [term]="filter.value"></ngb-highlight>
-                  </td>
-                  <td><ngb-highlight [result]="company.products.length"
-                      [term]="filter.value"></ngb-highlight></td>
-                  <td>
-                    <button type="button" class="btn btn-outline-primary" (click)="openCompany(modalCompany,company._id)">Ver Local</button>
+                    <button type="button" class="btn btn-outline-primary"
+                      (click)="openCompany(modalCompany,company._id)">Ver
+                      Local</button>
                   </td>
                 </tr>
               </tbody>
@@ -79,19 +82,139 @@
 
 </div>
 
-<!--Modal angular playlist-->
+<!--Moda mostrar local-->
 <ng-template #modalCompany let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title"> Nueva Playlis</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+
+    <div style="width: 100px; height: 100px; margin-top: 25px;">
+      <img src="{{company.logo}}" class="img-fluid" alt="...">
+
+    </div>
+    <h1 class="modal-title text-center" style="margin-left: 250px; margin-top: 50px;" id="modal-basic-title">{{company.name}} Company</h1>
+    <div> 
+      <ngb-rating [(rate)]="currentRate"></ngb-rating>
+        <hr>
+      <pre>Rate: <b>{{currentRate}}</b></pre>
+    </div>
+    <button type="button" class="close" aria-label="Close"
+      (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
+    </button>
+
+  </div>
+  <div class="modal-body">
+    
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-success">Guardar</button>
+    <button type="button" class="btn btn-outline-success"
+      (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>
+
+<!--Modal aagregar un local  #modalAddCompany-->
+<ng-template #modalAddCompany let-modal>
+  <div class="modal-header" style="background-color: #563D7C;">
+    <h4  style="color: aliceblue; font-size: large;" class="modal-title" id="modal-basic-title"> Agregar Local </h4>
+    <button  type="button" class="close" aria-label="Close"
+      (click)="modal.dismiss('Cross click')">
+      <span style="color: aliceblue;" aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-  
+    <form [formGroup]="formAddCompany">
+           <h3> Nombre de la compania</h3>
+        <input [ngClass]="{'input-error':formAddCompanyget['companyName'].invalid && (formAddCompanyget['companyName'].dirty || formAddCompanyget['companyName']?.touched)}" formControlName="companyName" type="text" class="form-control "
+          id="txt-nombre" placeholder="Nombre compania" required>
+          
+      <!--Validaciones campo nombre-->
+      <div *ngIf="formAddCompanyget['companyName'].errors &&  formAddCompanyget['companyName']?.touched" >
+        <div *ngIf="formAddCompanyget['companyName'].errors['required']"  >
+          El campo no puede estar vacio 
+        </div>
+       
+      </div>
+      <!--fina de las validaciones-->
+        <div> <h3> Descripcion de la compania o slogan</h3></div>
+        <input [ngClass]="{'input-error':formAddCompanyget['description'].invalid && (formAddCompanyget['description'].dirty || formAddCompanyget['description']?.touched)}" formControlName="description" type="text" class="form-control "
+          id="txt-descripcion" placeholder="descripcion de la compania">
+            <!--Validaciones campo nombre-->
+              <div *ngIf="formAddCompanyget['description'].errors &&  formAddCompanyget['description']?.touched" >
+                <div *ngIf="formAddCompanyget['description'].errors['required']"  >
+                  El campo no puede estar vacio 
+                </div>
+              
+              </div>
+       <!--fina de las validaciones-->
+       <div> <h3> Direccion</h3></div>
+      <div class="form-group">
+        <input [ngClass]="{'input-error':formAddCompanyget['address'].invalid && (formAddCompanyget['address'].dirty || formAddCompanyget['address']?.touched)}" formControlName="address" type="text" class="form-control "
+          id="txt-address" placeholder="ubicacion de la compania">
+      </div>
+          <!--Validaciones campo nombre-->
+          <div *ngIf="formAddCompanyget['address'].errors &&  formAddCompanyget['address']?.touched" >
+            <div *ngIf="formAddCompanyget['address'].errors['required']"  >
+              El campo no puede estar vacio 
+            </div>
+          
+          </div>
+  <!--fina de las validaciones-->
+
+      <div><h2>Seleccione archivo de Logotipo</h2></div>
+      <input class="input-file" (change)="capturarFile($event,'addCompany','logo')" type="file"
+        accept="image/*" placeholder="Seleccione Logo">
+      <div class="preview-img" *ngIf="previsualizacionLogo">
+        
+        <img [src]="previsualizacionLogo | img" alt="" style="width: 200px;">
+      </div>
+      <div class="m-t 2"><h2>Seleccione archivo de Banner</h2></div>
+      <input class="input-file" (change)="capturarFile($event,'addCompany','img')" type="file"
+        accept="image/*" placeholder="Seleccione Logo">
+      <div class="preview-img" *ngIf="previsualizacionImg">
+        
+        <img [src]="previsualizacionImg | img" alt="" style="width: 200px;">
+      </div>
+      <div *ngIf="previsualizacionLogo && previsualizacionImg"><button class="clear-image" type="button" (click)="clearImage()">Eliminar Todas las imagenes</button></div>
+
+    </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-success" >Guardar</button>
-    <button type="button" class="btn btn-outline-success" (click)="modal.close('Save click')">Save</button>
+    <button type="button" class="btn btn-primary" [disabled]=formAddCompany.invalid (click)="saveCompany()">Guardar Categoria</button>
+    <button type="button" class="btn btn-primary" (click)="modal.close('Cerrar')">Cerrar</button>
   </div>
 </ng-template>
+
+<!--Modal aagregar una categoria-->
+<ng-template #modalAddCategory let-modal>
+  <div class="modal-header" style="background-color: #563D7C;">
+    <h4  style="color: aliceblue; font-size: large;" class="modal-title" id="modal-basic-title"> Agregar Categoria</h4>
+    <button  type="button" class="close" aria-label="Close"
+      (click)="modal.dismiss('Cross click')">
+      <span style="color: aliceblue;" aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formAddCategory">
+           <h3> Nombre de la categoria</h3>
+        <input [ngClass]="{'input-error':formAddCategoryget['categoryName'].invalid && (formAddCategoryget['categoryName'].dirty || formAddCategoryget['categoryName']?.touched)}" formControlName="categoryName" type="text" class="form-control "
+          id="txt-nombre" placeholder="Nombre compania" required>
+          
+      <!--Validaciones campo nombre-->
+      <div *ngIf="formAddCategoryget['categoryName'].errors &&  formAddCategoryget['categoryName']?.touched" >
+        <div *ngIf="formAddCategoryget['categoryName'].errors['required']"  >
+          El campo no puede estar vacio 
+        </div>
+       
+      </div>
+      <!--fina de las validaciones-->
+       
+     
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" [disabled]=formAddCategory.invalid (click)="saveCategory()">Guardar Categoria</button>
+    <button type="button" class="btn btn-primary" (click)="modal.close('Cerrar')">Cerrar</button>
+  </div>
+</ng-template>
+

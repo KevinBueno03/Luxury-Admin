@@ -19,6 +19,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { CompaniesComponent } from './components/companies/companies.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Ng2OrderModule } from 'ng2-order-pipe';
+import { ImgPipe } from './components/companies/img.pipe';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 //componentes
 
@@ -29,7 +31,8 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
     NavbarComponent,
     AuthComponent,
     OrdersComponent,
-    CompaniesComponent
+    CompaniesComponent,
+    ImgPipe
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,8 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
     ReactiveFormsModule,
     HttpClientModule,
     Ng2SearchPipeModule,
-    Ng2OrderModule
+    Ng2OrderModule,
+    SweetAlert2Module
   ],
     
     providers:[

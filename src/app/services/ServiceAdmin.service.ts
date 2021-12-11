@@ -47,12 +47,46 @@ import { LoginResponse } from "../interfaces/admin.interfaces";
     }
 
     obtenerCategorias():Observable<any>{
-        return this.http.get('http://127.0.0.1:8888/api/categories',{})
+        return this.http.get(`${this.APIURL}/categories`,{})
     }
 
     obtenerLocales(idCategoria:any):Observable<any>{
-        return this.http.get(`http://127.0.0.1:8888/api/category/${idCategoria}/companies`,{})
+        return this.http.get(`${this.APIURL}/category/${idCategoria}/companies`,{})
     }
+    
+    obtenerProductos(idCompany:any):Observable<any>{
+        return this.http.get(`${this.APIURL}/company/${idCompany}/products`,{})
+    }
+    
+    obtenerCompany(idCompany:any):Observable<any>{
+        return this.http.get(`${this.APIURL}/companies/company/${idCompany}`,{})
+    }
+    
+
+     guardarCategoria(data:any):Observable<any>{
+        
+        return this.http.post(`${this.APIURL}/category`,
+            {
+                name:data.name
+            }
+        )
+    }
+     guardarCompany(data:any,id:any):Observable<any>{
+        
+        return this.http.post(`${this.APIURL}/company/category/${id}`,
+            {
+                'name':data.name,
+                'description':data.description,
+                'address':data.address,
+                'logo':data.logo,
+                'img':data.img
+            }
+        )
+    }
+
+
+    
+
 
    
 

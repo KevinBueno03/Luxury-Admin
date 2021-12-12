@@ -88,7 +88,7 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div  class="col" style="width: 100px; height: 100px; margin-top: 25px;">
+        <div  class="col" style="width: 80px; height: 80px; margin-top: 20px; margin-bottom: 20px;">
           <img src="{{company.logo}}" class="img-fluid" alt="...">
         </div>
         <div class="col"> <h1 class="modal-title text-center" style="margin-left: 250px; margin-top: 50px;" id="modal-basic-title">{{company.name}} Company</h1>
@@ -104,11 +104,13 @@
     </div>
     
     
-    
-    <button type="button" class="close" aria-label="Close"
-      (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-  </button>
+    <div style="margin-top: 40px; margin-bottom: 40px;">
+
+      <button type="button" class="close" aria-label="Close"
+        (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
 
   </div>
   <!--body-->
@@ -140,9 +142,8 @@
 
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-success">Guardar</button>
     <button type="button" class="btn btn-outline-success"
-      (click)="modal.close('Save click')">Save</button>
+      (click)="modal.close('Save click')">Cerrar</button>
   </div>
 </ng-template>
 
@@ -213,7 +214,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" [disabled]=formAddCompany.invalid (click)="saveCompany()">Guardar Categoria</button>
+    <button type="button" class="btn btn-primary" [disabled]=formAddCompany.invalid (click)="saveCompany()">Guardar Local</button>
     <button type="button" class="btn btn-primary" (click)="modal.close('Cerrar')">Cerrar</button>
   </div>
 </ng-template>
@@ -281,7 +282,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" [disabled]=formAddProduct.invalid (click)="saveProduct()">Guardar Categoria</button>
+    <button type="button" class="btn btn-primary" [disabled]=formAddProduct.invalid (click)="saveProduct(); modal.close('Cerrar')">Guardar Producto</button>
     <button type="button" class="btn btn-primary" (click)="modal.close('Cerrar')">Cerrar</button>
   </div>
 </ng-template>

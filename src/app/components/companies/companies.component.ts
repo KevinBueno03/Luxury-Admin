@@ -216,6 +216,9 @@ openAddProduct(modal:any){
             this.companiesCategory=res.companies;
             
             console.log("companies: ",this.companiesCategory)
+            this.archivos = [];
+            this.previsualizacionImg="";
+            
           }
            ,
           error =>{
@@ -248,7 +251,8 @@ openAddProduct(modal:any){
           res =>{
             this.productsCompany=res.products;
             console.log("Productos: ",this.productsCompany)
-            
+            this.archivos = [];
+            this.previsualizacionImg="";
           }
           ,
           error =>{
@@ -285,6 +289,9 @@ openAddProduct(modal:any){
             this.categories=res;
             console.log("categories: ",this.categories)
             this.modalService.dismissAll();
+            this.archivos = [];
+            this.previsualizacionImg="";
+            this.previsualizacionLogo="";
           }
           ,
           error =>{
@@ -315,6 +322,7 @@ search(){
 
   ////
   async capturarFile(event: any,toWhatForm:any,whatFile:any) {
+    this.archivos = [];
 
     if(toWhatForm=='addCompany'){
       if(whatFile=='logo'){

@@ -14,13 +14,16 @@ import { ServiceAdmin } from './services/ServiceAdmin.service';
 import { HttpClientModule } from '@angular/common/http';
 //components
 import { AuthComponent } from './components/auth/auth.component';
-import { OrdersComponent } from './components/orders/orders.component';
+
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CompaniesComponent } from './components/companies/companies.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Ng2OrderModule } from 'ng2-order-pipe';
 import { ImgPipe } from './components/companies/img.pipe';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { BikersComponent } from './components/bikers/bikers.component';
+import { OrdersComponent } from './components/orders/orders.component';
+
 
 //componentes
 
@@ -30,9 +33,11 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     AppComponent,
     NavbarComponent,
     AuthComponent,
-    OrdersComponent,
     CompaniesComponent,
-    ImgPipe
+    ImgPipe,
+    BikersComponent,
+    OrdersComponent,
+   
   ],
   imports: [
     BrowserModule,

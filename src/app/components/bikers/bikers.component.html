@@ -1,0 +1,60 @@
+<app-navbar></app-navbar>
+
+
+<div class="container align-middle position-relative" style="margin-top:5em;">
+    <div class="shadow-lg p-3 mb-5 ml-5 bg-body rounded" style="max-width:auto;
+        max-height:max-content;">
+
+        <div class="container">
+            <div class="col-5" style="margin-top: 1rem;">
+                <h1 style="font-weight: bolder; font-size:3rem;"
+                    class="c-morado">Motoristas</h1>
+            </div>
+
+            <!--Row table-->
+            <div class="container-fluid">
+
+
+                <div class="row" style="margin-top: 1rem;">
+
+                    <div class="col-12">
+
+
+                        <table class="table table-striped col-10 mt-2"
+                            style="margin-left:5rem;">
+                            <thead>
+                                <tr>
+                                    <th>#id Biker</th>
+                                    <th>Nombre</th>
+                                    <th>Email</th>
+                                    <th>Celular</th>
+                                    <th>activo</th>
+                                    <th>acceptado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let biker of motoristas">
+                                    <td>{{ biker._id}}</td>
+                                    <td>{{biker.name}}</td>
+                                    <td> <p style="margin-left: 1px;">{{biker.email}}</p></td>
+                                    <td> <p style="margin-left: 1px;">+504{{biker.phone_number}}</p></td>
+                                    <td><mat-slide-toggle [(ngModel)]="biker.active" (click)="cambiarActive(biker.active,biker._id,biker.name)"></mat-slide-toggle></td>
+                                    <td><mat-slide-toggle [(ngModel)]="biker.accepted" (click)="cambiarAccepted(biker.accepted,biker._id,biker.name)"></mat-slide-toggle></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>

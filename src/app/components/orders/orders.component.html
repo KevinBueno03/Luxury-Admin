@@ -1,2 +1,120 @@
 <app-navbar></app-navbar>
-<p>Estoy en orders</p>
+
+<div class="container align-middle position-relative" style="margin-top:5em;">
+    <div class="shadow-lg p-3 mb-5 ml-5 bg-body rounded" style="max-width:auto;
+      max-height:max-content;">
+  
+      <div class="container">
+        <div class="col-5" style="margin-top: 1rem;">
+            <h1 style="font-weight: bolder; font-size:3rem;" class="c-morado">Ordenes</h1>
+          </div>
+  
+        <!--Row table-->
+        <div class="container-fluid">
+  
+  
+          <div class="row" style="margin-top: 1rem;">
+  
+            <div class="col-12">
+              <!--
+                  <form>
+                <div class="form-group form-inline">
+                  Busqueda: <input class="form-control ml-2" type="text"
+                    [formControl]="filter" />
+                </div>
+                </form>
+                -->
+            
+              <table class="table table-striped col-12 mt-2">
+                <thead>
+                  <tr>
+                    <th scope="col">#id order</th>
+                    <th scope="col">#id Comprador </th>
+                    <th scope="col">Nombre Comprador</th>
+                    <th scope="col">Estado de orden</th>
+                    <th scope="col">#id Motorista</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let order of paidOrders">
+                    <td>{{ order._id}}</td>
+                    <td>{{order.idBuyer}}</td>
+                    <td>  <p style="margin-left: 25px;">{{order.buyerName}}</p></td>
+                    <td >  <p style="margin-left: 15px;">{{order.nameStatus}}</p> </td>
+                    
+                    <td ><button *ngIf="!order.idBiker" type="button" style="margin-left: 15px;"
+                         class="btn btn-outline-primary"
+                         (click)="openAsignarMotorista(modalAsignarMotorista,order._id)" >Asignar Motorista</button> {{order.idBiker}}</td>
+                    
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+  
+    </div>
+  
+  </div>
+
+
+  <!--Modal asignar un motorista-->
+  <ng-template #modalAsignarMotorista let-modal>
+    <div class="modal-header" style="background-color: #563D7C;">
+      <h4  style="color: aliceblue; font-size: large;" class="modal-title" id="modal-basic-title"> Asignar Motorista</h4>
+      <button  type="button" class="close" aria-label="Close"
+        (click)="modal.dismiss('Cross click')">
+        <span style="color: aliceblue;" aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    
+    <div class="modal-body">
+
+        <div class="container-fluid">
+            <div class="row" style="margin-top: 1rem;">
+                <div class="col-12">
+
+
+                    <table class="table table-striped col-10 mt-2" style="margin-left:5rem;" >
+                        <thead>
+                          <tr>
+                            <th >#id Biker</th>
+                            <th >Nombre</th>
+                            <th  >Email</th>
+                            <th  >Celular</th>
+                            <th >Asignar</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let biker of motoristasAceptadosActivos">
+                            <td>{{ biker._id}}</td>
+                            <td>{{biker.name}}</td>
+                            <td>  <p style="margin-left: 1px;">{{biker.email}}</p></td>
+                            <td>  <p style="margin-left: 1px;">+504 {{biker.phone_number}}</p></td>
+                            
+                            <td ><button  type="button" style="margin-left: 15px;"
+                                 class="btn btn-outline-primary"
+                                 (click)="asignarOrden(biker._id)" >Asignar Order</button></td>
+                            
+                          </tr>
+                        </tbody>
+                      </table>
+
+
+
+                </div>
+            
+            </div>
+
+        </div>
+
+      
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="modal.close('Cerrar')">Cerrar</button>
+    </div>
+  </ng-template>
+  
+  

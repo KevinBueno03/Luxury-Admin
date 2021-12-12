@@ -67,7 +67,8 @@ import { LoginResponse } from "../interfaces/admin.interfaces";
         
         return this.http.post(`${this.APIURL}/category`,
             {
-                name:data.name
+                name:data.name,
+                img:data.img
             }
         )
     }
@@ -95,7 +96,18 @@ import { LoginResponse } from "../interfaces/admin.interfaces";
             }
         )
     }
-    
+
+    updateProducto(_id:string, body:any): Observable<any>{
+        const url = `${this.APIURL}/product/${_id}`;
+        return this.http.put<any>(url, body,{ observe: "body"});
+      }
+      
+    updateCompany(_id:string, body:any): Observable<any>{
+        const url = `${this.APIURL}/company/${_id}`;
+        return this.http.put<any>(url, body,{ observe: "body"});
+      }
+      
+
 
 
     

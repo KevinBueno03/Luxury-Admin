@@ -44,7 +44,7 @@ export class AuthComponent implements OnInit{
         console.log(res);
       if(res){
         console.log("entro")
-        this.router.navigateByUrl('/admin/orders');
+        this.router.navigateByUrl('/admin/bikers');
       }else {
         console.log(res);
         alert("datos invalidos");

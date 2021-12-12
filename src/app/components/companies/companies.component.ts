@@ -28,15 +28,22 @@ export class CompaniesComponent implements OnInit {
   productsCompany:any=[];
   company:any;
   currentRate = 0;
+  newRate:any;
+
+  //productthings
+  myActive:any;
+  body:any;
+
  
 //capfilethings
   public previsualizacionLogo!: string;
   public previsualizacionImg!: string;
   public archivos: any = [];
   public loading!: boolean;
-  public body = {};
+  
   public image = '';
   public logo = '';
+
 
 
  //companyThings
@@ -65,8 +72,10 @@ export class CompaniesComponent implements OnInit {
 
 
   constructor(private modalService:NgbModal,pipe: DecimalPipe, private adminService : ServiceAdmin
-    ,private sanitizer: DomSanitizer ,private _formBuilder :FormBuilder ,private stars: NgbRatingConfig) {
+    ,private sanitizer: DomSanitizer ,private _formBuilder :FormBuilder ,private stars: NgbRatingConfig, private starsAdd: NgbRatingConfig) {
       stars.max = 5;
+     
+
     }
 
   ngOnInit(): void {
@@ -158,7 +167,7 @@ export class CompaniesComponent implements OnInit {
     this.modalService.open(
       modal,
       {
-        size:'sm',
+        size:'l',
         centered:false
       }
     );
@@ -256,13 +265,18 @@ openAddProduct(modal:any){
     )
     
   }
+
    saveCategory(){
+
     var newCategory ={
       'name':this.formAddCategory.get('categoryName')!.value,
+      'img':this.image
     }
-    
+
     console.log("newCategory",newCategory);
+
     this.adminService.guardarCategoria(newCategory).subscribe(
+      
       res =>{
       
         console.log("Guardada")
@@ -287,8 +301,6 @@ openAddProduct(modal:any){
     )
     
   }
-
-
 
 
 search(){
@@ -339,6 +351,18 @@ search(){
         this.archivos.push(this.image);
         console.log("Product img",this.archivos);
 
+    }else if(toWhatForm=='addCategory'){
+      this.archivos = [];
+      this.previsualizacionImg = ''
+      const archivoCapturado = event.target.files[0]
+        await this.extraerBase64(archivoCapturado).then((imagen: any) => {
+          this.previsualizacionImg = imagen.base;
+          this.image = imagen.base;
+          this.formAddProduct.controls['img'].setValue(this.image);
+        })
+        this.archivos.push(this.image);
+        console.log("Product img",this.archivos);
+
     }
     console.log(this.formAddCompany);
 }
@@ -376,4 +400,69 @@ search(){
   }
   //formaddCompany
   
+
+  cambiarActive(active:boolean,id:any,nombreProducto:any){
+    if(active===true){
+
+      this.myActive=false;
+      this.body={active: this.myActive};
+      console.log("tiempo");
+      this.adminService.updateProducto(id,this.body).subscribe(res=>{
+      
+        if(res){
+          Swal.fire('Cambio estado producto', 'El producto '+nombreProducto+' está desactivado ahora', 'info');
+        }else{
+          //mostrar mensaje de error
+          Swal.fire('Error', 'El producto '+nombreProducto+' no se cambio el estado', 'error');
+          
+        }
+      });
+
+      //this._router.navigateByUrl('/admin/listar-doctores');
+    }else if(active===false){
+     // active=true;
+      this.myActive=true;
+      this.body={active: this.myActive};
+
+      this.adminService.updateProducto(id,this.body).subscribe(res=>{
+        
+        if(res){
+          Swal.fire('Cambio estado producto', 'El producto '+nombreProducto+' está activado ahora', 'success');
+        }else{
+          //mostrar mensaje de error
+          Swal.fire('Error', 'El producto '+nombreProducto+' no se cambio el estado', 'error');
+        }
+      });
+      //this._router.navigateByUrl('/admin/listar-doctores');
+    }
+    //this.body={active: active};
+
+  }
+
+  cambioPuntaje(id:any,rating:any){
+    
+    console.log(this.currentRate);
+
+    
+    this.generarCambio(id,rating)
+      
+  }
+
+  generarCambio(id:any,rating:any){
+
+    console.log(rating);
+    this.body={calification: rating};
+      console.log(this.body);
+      this.adminService.updateCompany(id,this.body).subscribe(res=>{
+        
+        if(res){
+          Swal.fire('Cambio Calificacion Tienda', 'La caificaion fue cambiada' , 'success');
+
+        }else{
+          //mostrar mensaje de error
+          Swal.fire('Error', 'No se cambio la calificacion' , 'error');
+        }
+      });
+  }
+
 }

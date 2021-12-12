@@ -10,9 +10,25 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="navbar-brand" style="margin-left: 25rem;"  href="#"><fa-icon style="font-size:3rem;" [icon]="faShoppingBag"></fa-icon></a>
-          <a class="navbar-brand" style="margin-left: 2rem;" ><fa-icon style="font-size:3rem;" [icon]="faTruck"></fa-icon></a> 
-          <a class="navbar-brand" style="margin-left: 2rem;"  (click)="showCompanies()"><fa-icon style="font-size:3rem;" [icon]="faStore"></fa-icon></a> 
+          <div (click)="showOrders()" style="margin-left: 25rem;" >
+            <a class="navbar-brand"   ><fa-icon style="font-size:3rem;" [icon]="faShoppingBag"></fa-icon></a>
+            <p style="color: white;">Ordenes</p>
+          </div>
+          <div (click)="showBikers()">
+            <a class="navbar-brand" style="margin-left: 2rem;"  ><fa-icon style="font-size:3rem;" [icon]="faTruck"></fa-icon></a> 
+            <p style="color: white;margin-left: 2rem;">Motoristas</p>
+            
+          </div>
+          <div (click)="showCompanies()">
+            <a class="navbar-brand" style="margin-left: 2rem;"  ><fa-icon style="font-size:3rem;" [icon]="faStore"></fa-icon></a> 
+            <p style="color: white;margin-left: 2.3rem;">Locales</p>
+
+          </div>
+          <div (click)="logOut()" style="margin-left: 30rem;">
+            <a class="navbar-brand"   ><fa-icon style="font-size:3rem;" [icon]="faPowerOff"></fa-icon></a> 
+            <p style="color: white;">LOGOUT</p>
+
+          </div>
         </div>
       </div>
     </div>

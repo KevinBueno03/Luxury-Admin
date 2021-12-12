@@ -93,8 +93,10 @@
         </div>
         <div class="col"> <h1 class="modal-title text-center" style="margin-left: 250px; margin-top: 50px;" id="modal-basic-title">{{company.name}} Company</h1>
         </div>
-        <div class="col" style="margin-left: 250px;margin-top: 50px "> 
-          <ngb-rating [(rate)]="currentRate"></ngb-rating>
+        <div  class="col" style="margin-left: 250px;margin-top: 50px "> 
+          <ngb-rating [(rate)]="currentRate" 
+          
+          (rateChange)=cambioPuntaje(company._id,$event)></ngb-rating>
             <hr>
           <pre>Rate: <b>{{currentRate}}</b></pre>
         </div>
@@ -131,7 +133,7 @@
           <td scope="row">{{ product._id}}</td>
           <td>{{product.name}}</td>
           <td>{{product.price}}</td>
-          <td>{{product.active}}</td>
+          <td><mat-slide-toggle [(ngModel)]="product.active" (click)="cambiarActive(product.active,product._id,product.name)"></mat-slide-toggle></td>
         </tr>
       </tbody>
     </table>
@@ -307,7 +309,16 @@
        
       </div>
       <!--fina de las validaciones-->
-       
+
+      <div class="m-t 2"><h2>Seleccione una imagen del producto</h2></div>
+      <input class="input-file" (change)="capturarFile($event,'addCategory','img')" type="file"
+        accept="image/*" placeholder="Seleccione Logo">
+      <div class="preview-img" *ngIf="previsualizacionImg">
+        
+        <img [src]="previsualizacionImg | img" alt="" style="width: 200px;">
+      </div>
+      <div *ngIf="previsualizacionLogo && previsualizacionImg"><button class="clear-image" type="button" (click)="clearImage()">Eliminar Todas las imagenes</button></div>
+
      
 
     </form>
